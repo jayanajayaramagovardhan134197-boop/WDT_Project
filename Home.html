@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip Zone – Explore the World</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B8860B;
+    --gold-light: #D4A827;
+    --cream: #FFFDF7;
+    --cream-2: #FFF5E6;
+    --cream-3: #F5EAD5;
+    --white: #FFFFFF;
+    --text: #1C1C2E;
+    --text-muted: #7A6E5F;
+    --border: #E5DDD0;
+    --nav-h: 70px;
+    --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
+
+  /* ── NAVBAR ── */
+  .navbar { position:fixed; top:0; left:0; right:0; z-index:1000; height:var(--nav-h); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; background:rgba(255,253,247,0.92); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); transition:box-shadow 0.3s; }
+  .navbar.scrolled { box-shadow:var(--shadow-md); }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:700; color:var(--gold); letter-spacing:2px; text-decoration:none; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.88rem; letter-spacing:0.3px; transition:color 0.25s; font-weight:500; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+  .nav-right { display:flex; align-items:center; gap:0.85rem; }
+  .btn-outline { padding:0.48rem 1.2rem; border:1.5px solid var(--border); border-radius:8px; color:var(--text-muted); font-size:0.85rem; background:transparent; text-decoration:none; transition:all 0.25s; font-weight:500; }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+  .btn-gold-sm { padding:0.48rem 1.2rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:8px; color:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; text-decoration:none; transition:all 0.25s; }
+  .btn-gold-sm:hover { opacity:0.88; color:#fff; }
+  .hamburger { display:none; background:none; border:none; cursor:pointer; }
+  .hamburger span { display:block; width:22px; height:2px; background:var(--text); margin:5px 0; border-radius:2px; }
+  .mobile-menu { display:none; position:fixed; top:var(--nav-h); left:0; right:0; background:var(--white); padding:1.5rem 2rem; border-bottom:1px solid var(--border); z-index:999; box-shadow:var(--shadow-md); }
+  .mobile-menu.open { display:block; }
+  .mobile-menu a { display:block; color:var(--text-muted); text-decoration:none; padding:0.75rem 0; border-bottom:1px solid var(--border); font-size:0.95rem; font-weight:500; }
+  .mobile-menu a:hover { color:var(--gold); }
+
+  /* ── HERO ── */
+  .hero { position:relative; height:100vh; min-height:680px; display:flex; align-items:center; justify-content:center; overflow:hidden; padding-top:var(--nav-h); }
+  .hero-bg { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1600&q=80') center/cover no-repeat; }
+  .hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,253,247,0.15) 0%,rgba(255,253,247,0.6) 65%,rgba(255,253,247,1) 100%); }
+  .hero-content { position:relative; z-index:1; text-align:center; padding:0 1rem; animation:fadeUp 0.9s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(36px)} to{opacity:1;transform:translateY(0)} }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(184,134,11,0.1); border:1px solid rgba(184,134,11,0.25); border-radius:50px; padding:0.4rem 1.1rem; font-size:0.76rem; letter-spacing:2px; color:var(--gold); margin-bottom:1.5rem; font-weight:600; }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,8vw,7rem); font-weight:300; line-height:1; color:var(--text); margin-bottom:1rem; }
+  .hero-title strong { font-weight:800; font-style:italic; color:var(--gold); }
+  .hero-sub { font-size:1.05rem; color:var(--text-muted); max-width:500px; margin:0 auto 2.5rem; line-height:1.7; }
+  .hero-cta { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-gold { padding:0.85rem 2.5rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:50px; color:#fff; font-weight:700; font-size:0.95rem; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all 0.3s; box-shadow:0 4px 20px rgba(184,134,11,0.25); }
+  .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(184,134,11,0.35); color:#fff; }
+  .btn-outline-gold { padding:0.85rem 2.5rem; background:transparent; border:1.5px solid var(--border); border-radius:50px; color:var(--text-muted); font-size:0.95rem; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all 0.3s; }
+  .btn-outline-gold:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* ── SECTIONS ── */
+  .container-custom { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+  section { padding:5rem 1.5rem; }
+  .sec-label { display:inline-flex; align-items:center; gap:8px; font-size:0.72rem; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:0.75rem; font-weight:600; }
+  .sec-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem); font-weight:400; color:var(--text); margin-bottom:1.5rem; line-height:1.2; }
+  .sec-title em { font-style:italic; color:var(--gold); }
+
+  /* ── FEATURES ── */
+  .feature-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1rem; margin-top:2.5rem; }
+  .feat-card { background:var(--white); border:1.5px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; flex-direction:column; align-items:center; text-align:center; cursor:pointer; transition:all 0.3s; text-decoration:none; color:inherit; box-shadow:var(--shadow-sm); }
+  .feat-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:var(--shadow-md); color:inherit; }
+  .feat-icon { width:50px; height:50px; background:var(--cream-2); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin-bottom:0.9rem; color:var(--gold); }
+  .feat-title { font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:0.25rem; }
+  .feat-sub { font-size:0.78rem; color:var(--text-muted); line-height:1.5; }
+
+  /* ── CATEGORY GRID ── */
+  .cat-grid { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:270px 270px; gap:1.25rem; }
+  .cat-card { border-radius:16px; overflow:hidden; position:relative; cursor:pointer; }
+  .cat-card:first-child { grid-row:span 2; }
+  .cat-card img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+  .cat-card:hover img { transform:scale(1.05); }
+  .cat-overlay { position:absolute; inset:0; background:linear-gradient(0deg,rgba(26,26,46,0.75) 0%,transparent 55%); display:flex; flex-direction:column; justify-content:flex-end; padding:1.5rem; }
+  .cat-label { font-size:0.68rem; letter-spacing:2px; color:#E8C97E; margin-bottom:0.3rem; font-weight:600; }
+  .cat-name { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:#fff; font-weight:600; }
+  .cat-count { font-size:0.76rem; color:rgba(255,255,255,0.65); margin-top:0.2rem; }
+  .cat-arrow { position:absolute; top:1rem; right:1rem; width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,0.35); display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.85rem; transition:all 0.3s; text-decoration:none; }
+  .cat-card:hover .cat-arrow { background:var(--gold); border-color:var(--gold); }
+
+  /* ── DESTINATION CARDS ── */
+  .dest-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1.5rem; }
+  .dest-card { border-radius:16px; overflow:hidden; cursor:pointer; transition:all 0.35s; position:relative; aspect-ratio:3/4; }
+  .dest-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,0.12); }
+  .dest-card img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; }
+  .dest-card:hover img { transform:scale(1.05); }
+  .dest-overlay { position:absolute; inset:0; background:linear-gradient(0deg,rgba(26,26,46,0.82) 0%,transparent 50%); display:flex; flex-direction:column; justify-content:flex-end; padding:1.5rem; }
+  .dest-region { font-size:0.68rem; letter-spacing:2px; color:#E8C97E; margin-bottom:0.3rem; font-weight:600; }
+  .dest-name { font-family:'Cormorant Garamond',serif; font-size:1.55rem; color:#fff; font-weight:600; margin-bottom:0.25rem; }
+  .dest-meta { display:flex; align-items:center; gap:1rem; }
+  .dest-price { font-size:0.88rem; color:#E8C97E; }
+  .dest-rating { font-size:0.78rem; color:rgba(255,255,255,0.65); }
+  .dest-badge { position:absolute; top:1rem; right:1rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:#fff; font-size:0.68rem; font-weight:700; padding:0.28rem 0.7rem; border-radius:50px; letter-spacing:0.5px; }
+
+  /* ── DEALS ── */
+  .deal-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+  .deal-card { background:var(--white); border:1.5px solid var(--border); border-radius:16px; overflow:hidden; transition:all 0.3s; box-shadow:var(--shadow-sm); }
+  .deal-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:var(--shadow-md); }
+  .deal-img { width:100%; height:185px; object-fit:cover; }
+  .deal-body { padding:1.25rem; }
+  .deal-tag { display:inline-block; background:var(--cream-2); color:var(--gold); font-size:0.7rem; letter-spacing:1px; padding:0.22rem 0.65rem; border-radius:50px; margin-bottom:0.75rem; font-weight:600; border:1px solid rgba(184,134,11,0.2); }
+  .deal-title { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--text); margin-bottom:0.25rem; font-weight:600; }
+  .deal-sub { font-size:0.8rem; color:var(--text-muted); }
+  .deal-info { display:flex; align-items:center; justify-content:space-between; margin-top:1rem; }
+  .deal-price { font-size:1.1rem; color:var(--gold); font-weight:700; }
+  .deal-old { text-decoration:line-through; color:#B0A090; font-size:0.82rem; }
+  .deal-btn { padding:0.42rem 1rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:8px; color:#fff; font-size:0.8rem; font-weight:600; cursor:pointer; text-decoration:none; transition:opacity 0.25s; }
+  .deal-btn:hover { opacity:0.85; color:#fff; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background:var(--cream-3); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:5rem 1.5rem; text-align:center; }
+  .nl-form { display:flex; gap:0.75rem; max-width:460px; margin:2rem auto 0; flex-wrap:wrap; justify-content:center; }
+  .nl-input { flex:1; min-width:200px; background:var(--white); border:1.5px solid var(--border); color:var(--text); padding:0.72rem 1.2rem; border-radius:10px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.25s; font-size:0.9rem; }
+  .nl-input:focus { border-color:var(--gold); }
+  .nl-input::placeholder { color:#C5B8A8; }
+
+  /* ── FOOTER ── */
+  footer { background:var(--white); padding:4rem 2rem 2rem; border-top:1px solid var(--border); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1200px; margin:0 auto; }
+  .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1.7rem; color:var(--gold); font-weight:700; margin-bottom:0.9rem; }
+  .footer-desc { font-size:0.84rem; color:var(--text-muted); line-height:1.75; max-width:240px; }
+  .footer-social { display:flex; gap:0.65rem; margin-top:1.5rem; }
+  .soc-icon { width:34px; height:34px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.85rem; transition:all 0.25s; text-decoration:none; }
+  .soc-icon:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-col h5 { font-size:0.8rem; letter-spacing:1.5px; color:var(--text); text-transform:uppercase; margin-bottom:1.2rem; font-weight:600; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.6rem; }
+  .footer-col ul a { font-size:0.84rem; color:var(--text-muted); text-decoration:none; transition:color 0.25s; }
+  .footer-col ul a:hover { color:var(--gold); }
+  .footer-bottom { border-top:1px solid var(--border); margin-top:3rem; padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; font-size:0.78rem; color:var(--text-muted); max-width:1200px; margin-left:auto; margin-right:auto; }
+
+  /* ── SECTION BG ── */
+  .bg-cream-2 { background:var(--cream-2); }
+
+  /* ── MODAL ── */
+  .modal-content { background:var(--white)!important; border:1px solid var(--border)!important; border-radius:16px!important; }
+  .modal-header { border-color:var(--border)!important; }
+  .modal-footer { border-color:var(--border)!important; }
+  .btn-close { filter:none!important; }
+
+  @media(max-width:992px) { .cat-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;} .cat-card:first-child{grid-row:span 1;} .footer-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:768px) { .nav-links{display:none;} .hamburger{display:block;} .cat-grid{grid-template-columns:1fr;} .footer-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="mainNav">
+  <a class="nav-logo" href="home.html">✦ Trip Zone</a>
+  <ul class="nav-links">
+    <li><a href="home.html" class="active">Home</a></li>
+    <li><a href="india.html">India</a></li>
+    <li><a href="world.html">World</a></li>
+    <li><a href="flights-cabs.html">Flights & Cabs</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="login.html" class="btn-outline d-none d-md-inline-flex">Sign In</a>
+    <a href="signup.html" class="btn-gold-sm">Get Started</a>
+    <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="home.html">🏠 Home</a>
+  <a href="india.html">🇮🇳 India Destinations</a>
+  <a href="world.html">🌍 World Destinations</a>
+  <a href="flights-cabs.html">✈️ Flights & Cabs</a>
+  <a href="about.html">ℹ️ About</a>
+  <a href="login.html">🔑 Sign In</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Premium Travel Experiences</div>
+    <h1 class="hero-title">Discover the<br><strong>World's</strong><br>Wonders</h1>
+    <p class="hero-sub">Curated journeys across India's sacred landscapes and the world's most extraordinary destinations.</p>
+    <div class="hero-cta">
+      <a href="india.html" class="btn-gold"><i class="bi bi-geo-alt-fill"></i> Explore India</a>
+      <a href="world.html" class="btn-outline-gold"><i class="bi bi-globe2"></i> World Destinations</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="container-custom">
+    <div class="sec-label">✦ What We Offer</div>
+    <h2 class="sec-title">Everything You Need<br>for a <em>Perfect Trip</em></h2>
+    <div class="feature-cards">
+      <a href="flights-cabs.html" class="feat-card">
+        <div class="feat-icon"><i class="bi bi-airplane-fill"></i></div>
+        <div class="feat-title">Flight Booking</div>
+        <div class="feat-sub">Domestic & international flights at best prices</div>
+      </a>
+      <a href="flights-cabs.html" class="feat-card">
+        <div class="feat-icon"><i class="bi bi-car-front-fill"></i></div>
+        <div class="feat-title">Cab Services</div>
+        <div class="feat-sub">Reliable cab & airport transfer bookings</div>
+      </a>
+      <a href="india.html" class="feat-card">
+        <div class="feat-icon"><i class="bi bi-map-fill"></i></div>
+        <div class="feat-title">Tour Packages</div>
+        <div class="feat-sub">Curated India & world travel packages</div>
+      </a>
+      <a href="#deals" class="feat-card">
+        <div class="feat-icon"><i class="bi bi-tag-fill"></i></div>
+        <div class="feat-title">Hot Deals</div>
+        <div class="feat-sub">Exclusive discounts up to 50% off</div>
+      </a>
+      <a href="world.html" class="feat-card">
+        <div class="feat-icon"><i class="bi bi-globe2"></i></div>
+        <div class="feat-title">World Tours</div>
+        <div class="feat-sub">Explore 100+ world-class destinations</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="bg-cream-2">
+  <div class="container-custom">
+    <div class="sec-label">✦ Browse by Category</div>
+    <h2 class="sec-title">Choose Your <em>Adventure</em></h2>
+    <div class="cat-grid">
+      <a class="cat-card" href="india.html">
+        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=700&q=80" alt="India">
+        <div class="cat-overlay"><div class="cat-label">INDIA</div><div class="cat-name">Indian Destinations</div><div class="cat-count">80+ curated spots</div></div>
+        <div class="cat-arrow"><i class="bi bi-arrow-right"></i></div>
+      </a>
+      <a class="cat-card" href="world.html">
+        <img src="https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=500&q=80" alt="Europe">
+        <div class="cat-overlay"><div class="cat-label">EUROPE</div><div class="cat-name">European Escapes</div><div class="cat-count">45+ destinations</div></div>
+        <div class="cat-arrow"><i class="bi bi-arrow-right"></i></div>
+      </a>
+      <a class="cat-card" href="world.html">
+        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=500&q=80" alt="Asia">
+        <div class="cat-overlay"><div class="cat-label">ASIA</div><div class="cat-name">Asia Pacific</div><div class="cat-count">60+ destinations</div></div>
+        <div class="cat-arrow"><i class="bi bi-arrow-right"></i></div>
+      </a>
+      <a class="cat-card" href="flights-cabs.html">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500&q=80" alt="Flights">
+        <div class="cat-overlay"><div class="cat-label">TRAVEL</div><div class="cat-name">Flights & Cabs</div><div class="cat-count">Best-price guaranteed</div></div>
+        <div class="cat-arrow"><i class="bi bi-arrow-right"></i></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING -->
+<section>
+  <div class="container-custom">
+    <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-4">
+      <div>
+        <div class="sec-label">✦ Trending Now</div>
+        <h2 class="sec-title mb-0">Most Popular <em>Destinations</em></h2>
+      </div>
+      <a href="india.html" class="btn-outline-gold" style="padding:0.55rem 1.4rem;border-radius:50px;font-size:0.85rem;">View All <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=500&q=80" alt="Taj Mahal">
+        <div class="dest-overlay"><div class="dest-region">UTTAR PRADESH • INDIA</div><div class="dest-name">Taj Mahal</div><div class="dest-meta"><div class="dest-price">From ₹8,999</div><div class="dest-rating">⭐ 4.9</div></div></div>
+        <div class="dest-badge">ICON</div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFyaXN8ZW58MHx8MHx8fDA%3D" alt="Paris">
+        <div class="dest-overlay"><div class="dest-region">EUROPE • FRANCE</div><div class="dest-name">Paris</div><div class="dest-meta"><div class="dest-price">From ₹89,999</div><div class="dest-rating">⭐ 4.8</div></div></div>
+        <div class="dest-badge">POPULAR</div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Manali">
+        <div class="dest-overlay"><div class="dest-region">HIMACHAL • INDIA</div><div class="dest-name">Manali</div><div class="dest-meta"><div class="dest-price">From ₹12,499</div><div class="dest-rating">⭐ 4.7</div></div></div>
+        <div class="dest-badge">TRENDING</div>
+      </div>
+      <div class="dest-card">
+        <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=500&q=80" alt="Tokyo">
+        <div class="dest-overlay"><div class="dest-region">ASIA • JAPAN</div><div class="dest-name">Tokyo</div><div class="dest-meta"><div class="dest-price">From ₹74,999</div><div class="dest-rating">⭐ 4.9</div></div></div>
+        <div class="dest-badge">HOT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEALS -->
+<section id="deals" class="bg-cream-2">
+  <div class="container-custom">
+    <div class="sec-label">✦ Limited Time</div>
+    <h2 class="sec-title">Exclusive <em>Deals</em> Just for You</h2>
+    <div class="deal-cards">
+      <div class="deal-card">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&q=80" alt="Goa">
+        <div class="deal-body">
+          <span class="deal-tag">BEACH SPECIAL</span>
+          <div class="deal-title">Goa Beach Holiday</div>
+          <div class="deal-sub">5 nights · Flights + Hotel + Breakfast</div>
+          <div class="deal-info">
+            <div><div class="deal-price">₹24,999</div><div class="deal-old">₹42,000</div></div>
+            <a href="india.html" class="deal-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="deal-card">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500&q=80" alt="Maldives">
+        <div class="deal-body">
+          <span class="deal-tag">LUXURY ESCAPE</span>
+          <div class="deal-title">Maldives Overwater</div>
+          <div class="deal-sub">6 nights · All Inclusive Resort</div>
+          <div class="deal-info">
+            <div><div class="deal-price">₹1,19,999</div><div class="deal-old">₹1,85,000</div></div>
+            <a href="world.html" class="deal-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="deal-card">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&q=80" alt="Singapore">
+        <div class="deal-body">
+          <span class="deal-tag">FAMILY PACK</span>
+          <div class="deal-title">Singapore Explorer</div>
+          <div class="deal-sub">7 nights · Flights + 4★ Hotel</div>
+          <div class="deal-info">
+            <div><div class="deal-price">₹68,999</div><div class="deal-old">₹95,000</div></div>
+            <a href="world.html" class="deal-btn">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div class="container-custom">
+    <div class="sec-label" style="justify-content:center;">✦ Stay Updated</div>
+    <h2 class="sec-title" style="text-align:center;">Get the Best <em>Deals</em> in Your Inbox</h2>
+    <p style="color:var(--text-muted);text-align:center;font-size:0.9rem;">Subscribe and never miss a special offer or travel inspiration.</p>
+    <div class="nl-form">
+      <input class="nl-input" type="email" placeholder="your@email.com" id="nlEmail">
+      <button class="btn-gold" onclick="subscribe()" style="border-radius:10px;padding:0.72rem 1.75rem;">Subscribe</button>
+    </div>
+    <p id="nlMsg" style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--gold);display:none;">🎉 Thank you! You're subscribed.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">✦ Trip Zone</div>
+      <p class="footer-desc">Your trusted partner for premium travel experiences across India and beyond. Crafting unforgettable journeys since 2018.</p>
+      <div class="footer-social">
+        <a href="#" class="soc-icon"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Destinations</h5>
+      <ul>
+        <li><a href="india.html">India Tours</a></li>
+        <li><a href="world.html">Europe</a></li>
+        <li><a href="world.html">Asia Pacific</a></li>
+        <li><a href="world.html">Americas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="flights-cabs.html">Flights</a></li>
+        <li><a href="flights-cabs.html">Cab Rentals</a></li>
+        <li><a href="#">Hotel Booking</a></li>
+        <li><a href="#">Visa Assistance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Trip Zone Travel Pvt. Ltd. All rights reserved.</span>
+    <span>Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  window.addEventListener('scroll', () => { document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40); });
+  function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
+  function subscribe() {
+    const email = document.getElementById('nlEmail').value;
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('nlMsg').style.display='block'; document.getElementById('nlEmail').value=''; }
+    else alert('Please enter a valid email address.');
+  }
+</script>
+</body>
+</html>

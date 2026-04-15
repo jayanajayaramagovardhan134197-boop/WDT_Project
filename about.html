@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip Zone – About Us</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+  :root { --gold:#B8860B; --gold-light:#D4A827; --cream:#FFFDF7; --cream-2:#FFF5E6; --cream-3:#F5EAD5; --white:#FFFFFF; --text:#1C1C2E; --text-muted:#7A6E5F; --border:#E5DDD0; --nav-h:70px; --shadow-sm:0 2px 12px rgba(0,0,0,0.06); --shadow-md:0 8px 32px rgba(0,0,0,0.09); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
+
+  .navbar { position:fixed; top:0; left:0; right:0; z-index:1000; height:var(--nav-h); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; background:rgba(255,253,247,0.95); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm); }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:700; color:var(--gold); letter-spacing:2px; text-decoration:none; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.88rem; transition:color 0.25s; font-weight:500; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+  .btn-gold-sm { padding:0.48rem 1.2rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:8px; color:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; text-decoration:none; }
+  .hamburger { display:none; background:none; border:none; cursor:pointer; }
+  .hamburger span { display:block; width:22px; height:2px; background:var(--text); margin:5px 0; border-radius:2px; }
+  .mobile-menu { display:none; position:fixed; top:var(--nav-h); left:0; right:0; background:var(--white); padding:1.5rem 2rem; border-bottom:1px solid var(--border); z-index:999; box-shadow:var(--shadow-md); }
+  .mobile-menu.open { display:block; }
+  .mobile-menu a { display:block; color:var(--text-muted); text-decoration:none; padding:0.75rem 0; border-bottom:1px solid var(--border); font-size:0.95rem; }
+
+  .page-hero { padding-top:var(--nav-h); height:460px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .page-hero-bg { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1400&q=80') center/cover no-repeat; }
+  .page-hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,253,247,0.1) 0%,rgba(26,26,46,0.75) 100%); }
+  .hero-content { position:relative; z-index:1; text-align:center; padding:0 1rem; }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(232,201,126,0.2); border:1px solid rgba(232,201,126,0.4); border-radius:50px; padding:0.4rem 1.1rem; font-size:0.76rem; letter-spacing:2px; color:#E8C97E; margin-bottom:1.25rem; font-weight:600; }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:300; color:#fff; line-height:1.1; }
+  .hero-title em { font-style:italic; color:#E8C97E; }
+
+  .container-custom { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+  section { padding:5rem 1.5rem; }
+  .sec-label { display:inline-flex; align-items:center; gap:8px; font-size:0.72rem; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:0.75rem; font-weight:600; }
+  .sec-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem); font-weight:400; color:var(--text); margin-bottom:1.5rem; line-height:1.2; }
+  .sec-title em { font-style:italic; color:var(--gold); }
+
+  /* Story */
+  .story-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+  .story-img-wrap { position:relative; }
+  .story-img { width:100%; border-radius:18px; object-fit:cover; height:460px; box-shadow:var(--shadow-md); }
+  .story-badge { position:absolute; bottom:-1.5rem; right:-1.5rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:14px; padding:1.25rem 1.5rem; text-align:center; min-width:140px; box-shadow:0 12px 40px rgba(184,134,11,0.28); }
+  .story-badge-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; color:#fff; font-weight:700; }
+  .story-badge-label { font-size:0.78rem; color:rgba(255,255,255,0.85); }
+  .story-text { color:var(--text-muted); line-height:1.85; font-size:0.92rem; margin-bottom:1.25rem; }
+
+  /* Values */
+  .values-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1.5rem; }
+  .val-card { background:var(--white); border:1.5px solid var(--border); border-radius:14px; padding:1.75rem; transition:all 0.3s; box-shadow:var(--shadow-sm); }
+  .val-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:var(--shadow-md); }
+  .val-icon { width:50px; height:50px; background:var(--cream-2); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:var(--gold); margin-bottom:1.1rem; }
+  .val-title { font-family:'Cormorant Garamond',serif; font-size:1.25rem; color:var(--text); margin-bottom:0.5rem; font-weight:600; }
+  .val-text { font-size:0.84rem; color:var(--text-muted); line-height:1.7; }
+
+  /* Stats */
+  .stats-banner { background:var(--white); border:1.5px solid var(--border); border-radius:18px; padding:3rem 2rem; display:flex; justify-content:space-around; flex-wrap:wrap; gap:2rem; box-shadow:var(--shadow-sm); }
+  .stat { text-align:center; }
+  .stat-num { font-family:'Cormorant Garamond',serif; font-size:3rem; color:var(--gold); font-weight:700; }
+  .stat-label { font-size:0.84rem; color:var(--text-muted); margin-top:0.25rem; }
+
+  /* Timeline */
+  .timeline { position:relative; padding-left:3rem; }
+  .timeline::before { content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:var(--border); }
+  .tl-item { position:relative; margin-bottom:2.5rem; }
+  .tl-dot { position:absolute; left:-2.7rem; width:14px; height:14px; border-radius:50%; background:var(--gold); top:0.4rem; border:3px solid var(--cream); box-shadow:0 0 0 3px rgba(184,134,11,0.25); }
+  .tl-year { font-size:0.72rem; color:var(--gold); letter-spacing:2px; margin-bottom:0.3rem; font-weight:600; }
+  .tl-title { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--text); margin-bottom:0.3rem; font-weight:600; }
+  .tl-text { font-size:0.84rem; color:var(--text-muted); line-height:1.65; }
+
+  /* Team */
+  .team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:1.5rem; }
+  .team-card { text-align:center; background:var(--white); border:1.5px solid var(--border); border-radius:14px; padding:1.75rem 1.25rem; transition:all 0.3s; box-shadow:var(--shadow-sm); }
+  .team-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:var(--shadow-md); }
+  .team-img { width:88px; height:88px; border-radius:50%; object-fit:cover; border:3px solid var(--border); margin-bottom:1.1rem; transition:border-color 0.3s; }
+  .team-card:hover .team-img { border-color:var(--gold); }
+  .team-name { font-family:'Cormorant Garamond',serif; font-size:1.15rem; color:var(--text); margin-bottom:0.2rem; font-weight:600; }
+  .team-role { font-size:0.7rem; color:var(--gold); letter-spacing:1px; margin-bottom:0.5rem; font-weight:600; }
+  .team-bio { font-size:0.8rem; color:var(--text-muted); line-height:1.6; }
+  .team-social { display:flex; gap:0.5rem; justify-content:center; margin-top:0.85rem; }
+  .team-soc { width:30px; height:30px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.78rem; text-decoration:none; transition:all 0.25s; }
+  .team-soc:hover { border-color:var(--gold); color:var(--gold); }
+
+  /* Awards */
+  .awards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1.25rem; }
+  .award-card { background:var(--white); border:1.5px solid var(--border); border-radius:12px; padding:1.5rem; text-align:center; box-shadow:var(--shadow-sm); transition:all 0.3s; }
+  .award-card:hover { border-color:var(--gold); }
+  .award-icon { font-size:1.8rem; margin-bottom:0.65rem; }
+  .award-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--text); margin-bottom:0.2rem; font-weight:600; }
+  .award-year { font-size:0.72rem; color:var(--gold); font-weight:600; }
+
+  /* Contact */
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+  .c-item { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem; }
+  .c-icon { width:42px; height:42px; background:var(--cream-2); border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1rem; flex-shrink:0; border:1px solid var(--border); }
+  .c-label { font-size:0.72rem; color:var(--text-muted); margin-bottom:0.25rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:500; }
+  .c-val { font-size:0.92rem; color:var(--text); font-weight:500; }
+  .contact-form { background:var(--white); border:1.5px solid var(--border); border-radius:16px; padding:2rem; box-shadow:var(--shadow-sm); }
+  .cf-title { font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--text); margin-bottom:1.5rem; font-weight:600; }
+  .cf-group { margin-bottom:1.1rem; }
+  .cf-label { font-size:0.74rem; color:var(--text-muted); margin-bottom:0.4rem; display:block; text-transform:uppercase; letter-spacing:0.5px; font-weight:500; }
+  .cf-input,.cf-textarea { width:100%; background:var(--cream); border:1.5px solid var(--border); color:var(--text); padding:0.7rem 1rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; transition:all 0.25s; }
+  .cf-input:focus,.cf-textarea:focus { border-color:var(--gold); background:var(--white); box-shadow:0 0 0 3px rgba(184,134,11,0.08); }
+  .cf-input::placeholder,.cf-textarea::placeholder { color:#C5B8A8; }
+  .cf-textarea { resize:vertical; min-height:100px; }
+  .cf-btn { width:100%; padding:0.85rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:10px; color:#fff; font-weight:700; font-size:0.95rem; cursor:pointer; transition:all 0.3s; box-shadow:0 4px 16px rgba(184,134,11,0.22); }
+  .cf-btn:hover { opacity:0.9; transform:translateY(-1px); }
+  .cf-success { display:none; text-align:center; padding:1rem; color:var(--gold); font-size:0.9rem; font-weight:500; }
+
+  /* Footer */
+  footer { background:var(--white); padding:4rem 2rem 2rem; border-top:1px solid var(--border); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1200px; margin:0 auto; }
+  .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1.7rem; color:var(--gold); font-weight:700; margin-bottom:0.9rem; }
+  .footer-desc { font-size:0.84rem; color:var(--text-muted); line-height:1.75; max-width:240px; }
+  .footer-social { display:flex; gap:0.65rem; margin-top:1.5rem; }
+  .soc-icon { width:34px; height:34px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.85rem; transition:all 0.25s; text-decoration:none; }
+  .soc-icon:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-col h5 { font-size:0.8rem; letter-spacing:1.5px; color:var(--text); text-transform:uppercase; margin-bottom:1.2rem; font-weight:600; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.6rem; }
+  .footer-col ul a { font-size:0.84rem; color:var(--text-muted); text-decoration:none; transition:color 0.25s; }
+  .footer-col ul a:hover { color:var(--gold); }
+  .footer-bottom { border-top:1px solid var(--border); margin-top:3rem; padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; font-size:0.78rem; color:var(--text-muted); max-width:1200px; margin-left:auto; margin-right:auto; }
+
+  .bg-cream-2 { background:var(--cream-2); }
+
+  @media(max-width:992px) { .story-grid{grid-template-columns:1fr;} .story-badge{right:0;} .contact-grid{grid-template-columns:1fr;} .footer-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:768px) { .nav-links{display:none;} .hamburger{display:block;} .footer-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="home.html">✦ Trip Zone</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li><li><a href="india.html">India</a></li><li><a href="world.html">World</a></li><li><a href="flights-cabs.html">Flights & Cabs</a></li><li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="signup.html" class="btn-gold-sm">Get Started</a>
+    <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="home.html">🏠 Home</a><a href="india.html">🇮🇳 India</a><a href="world.html">🌍 World</a><a href="flights-cabs.html">✈️ Flights & Cabs</a><a href="about.html">ℹ️ About</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">✦ Our Story</div>
+    <h1 class="hero-title">Born from a <em>Passion</em><br>for Travel</h1>
+    <p style="color:rgba(255,255,255,0.72);margin-top:0.85rem;font-size:0.95rem;">Turning Trip Zone into extraordinary journeys since 2018.</p>
+  </div>
+</div>
+
+<!-- STORY -->
+<section>
+  <div class="container-custom">
+    <div class="story-grid">
+      <div class="story-img-wrap">
+        <img class="story-img" src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=600&q=80" alt="Our Story">
+        <div class="story-badge"><div class="story-badge-num">7+</div><div class="story-badge-label">Years of Excellence</div></div>
+      </div>
+      <div>
+        <div class="sec-label">✦ Who We Are</div>
+        <h2 class="sec-title">We Are <em>Trip Zone</em></h2>
+        <p class="story-text">Founded in 2018 by a group of passionate explorers, Trip Zone was born out of a simple belief: every person deserves a perfectly crafted travel experience. What began as a boutique travel agency in Mumbai has grown into one of India's most trusted premium travel platforms.</p>
+        <p class="story-text">We curate handpicked itineraries across India and 100+ countries, blending cultural authenticity with modern comfort. Our expert travel consultants — each a seasoned traveller themselves — ensure that every journey we craft tells a story worth remembering.</p>
+        <div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:0.5rem;">
+          <div style="text-align:center;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.5rem;box-shadow:var(--shadow-sm);">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);font-weight:700;">50K+</div>
+            <div style="font-size:0.76rem;color:var(--text-muted);">Happy Travellers</div>
+          </div>
+          <div style="text-align:center;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.5rem;box-shadow:var(--shadow-sm);">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);font-weight:700;">300+</div>
+            <div style="font-size:0.76rem;color:var(--text-muted);">Destinations</div>
+          </div>
+          <div style="text-align:center;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.5rem;box-shadow:var(--shadow-sm);">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);font-weight:700;">4.9★</div>
+            <div style="font-size:0.76rem;color:var(--text-muted);">Average Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="bg-cream-2">
+  <div class="container-custom">
+    <div class="sec-label">✦ What We Stand For</div>
+    <h2 class="sec-title">Our Core <em>Values</em></h2>
+    <div class="values-grid">
+      <div class="val-card"><div class="val-icon"><i class="bi bi-award-fill"></i></div><div class="val-title">Excellence</div><p class="val-text">Every detail is planned with meticulous attention to quality — from flights to final accommodation.</p></div>
+      <div class="val-card"><div class="val-icon"><i class="bi bi-heart-fill"></i></div><div class="val-title">Passion</div><p class="val-text">We craft experiences driven by our genuine love for exploration and discovery of the world.</p></div>
+      <div class="val-card"><div class="val-icon"><i class="bi bi-shield-check-fill"></i></div><div class="val-title">Trust</div><p class="val-text">Transparent pricing, no hidden fees, and a dedicated support team available 24/7.</p></div>
+      <div class="val-card"><div class="val-icon"><i class="bi bi-globe2"></i></div><div class="val-title">Sustainability</div><p class="val-text">We partner with eco-conscious hotels and offset carbon emissions from every trip we book.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section>
+  <div class="container-custom">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-5">
+        <div class="sec-label">✦ Our Journey</div>
+        <h2 class="sec-title">How We <em>Grew</em></h2>
+        <p style="color:var(--text-muted);font-size:0.9rem;line-height:1.8;">From a small team of three with big dreams to a 200-person company serving travellers across India and beyond.</p>
+      </div>
+      <div class="col-lg-7">
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2018</div><div class="tl-title">Trip Zone Founded</div><p class="tl-text">Three travel enthusiasts launched Trip Zone from a Mumbai co-working space with a simple website and a big dream.</p></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2019</div><div class="tl-title">10,000 Customers Milestone</div><p class="tl-text">Crossed our first major milestone and opened offices in Delhi and Bangalore. Launched signature Rajasthan Royal packages.</p></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2021</div><div class="tl-title">International Expansion</div><p class="tl-text">Expanded to international destinations across Southeast Asia, Europe, and the Middle East. Launched visa assistance service.</p></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2023</div><div class="tl-title">Trip Zone App Launch</div><p class="tl-text">Launched our mobile app with AI-powered trip planning. Reached 30,000 active users in the first month.</p></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">2025</div><div class="tl-title">50,000 Happy Travellers</div><p class="tl-text">Ranked #1 luxury travel platform in India by Travel+Leisure India. 50,000 journeys completed.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="bg-cream-2">
+  <div class="container-custom">
+    <div class="sec-label">✦ Leadership</div>
+    <h2 class="sec-title">Meet Our <em>Team</em></h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" class="team-img" alt="CEO">
+        <div class="team-name">Jaya Ram</div><div class="team-role">CO-FOUNDER & CEO</div>
+        <p class="team-bio">Seasoned traveller with 60+ countries visited. Former hotelier turned tech entrepreneur.</p>
+        <div class="team-social"><a href="#" class="team-soc"><i class="bi bi-linkedin"></i></a><a href="#" class="team-soc"><i class="bi bi-twitter-x"></i></a></div>
+      </div>
+      <div class="team-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" class="team-img" alt="COO">
+        <div class="team-name">Hari</div><div class="team-role">CO-FOUNDER & COO</div>
+        <p class="team-bio">Travel writer and operations expert. Passionate about seamless travel experiences.</p>
+        <div class="team-social"><a href="#" class="team-soc"><i class="bi bi-linkedin"></i></a><a href="#" class="team-soc"><i class="bi bi-instagram"></i></a></div>
+      </div>
+      <div class="team-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" class="team-img" alt="CTO">
+        <div class="team-name">Sumith</div><div class="team-role">CTO</div>
+        <p class="team-bio">Full-stack engineer who built our AI-powered travel matching engine from scratch.</p>
+        <div class="team-social"><a href="#" class="team-soc"><i class="bi bi-linkedin"></i></a><a href="#" class="team-soc"><i class="bi bi-github"></i></a></div>
+      </div>
+      <div class="team-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" class="team-img" alt="Head of Experiences">
+        <div class="team-name">Kushal</div><div class="team-role">HEAD OF EXPERIENCES</div>
+        <p class="team-bio">Destination expert and luxury curator. Has personally scouted every hotel in our portfolio.</p>
+        <div class="team-social"><a href="#" class="team-soc"><i class="bi bi-linkedin"></i></a><a href="#" class="team-soc"><i class="bi bi-instagram"></i></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section>
+  <div class="container-custom">
+    <div class="sec-label">✦ Recognition</div>
+    <h2 class="sec-title">Awards & <em>Accolades</em></h2>
+    <div class="awards-grid">
+      <div class="award-card"><div class="award-icon">🏆</div><div class="award-title">Best Luxury Travel Agency</div><div class="award-year">Travel+Leisure India · 2024</div></div>
+      <div class="award-card"><div class="award-icon">🥇</div><div class="award-title">Top Travel App India</div><div class="award-year">Google Play Awards · 2023</div></div>
+      <div class="award-card"><div class="award-icon">⭐</div><div class="award-title">4.9★ Customer Rating</div><div class="award-year">50,000+ verified reviews</div></div>
+      <div class="award-card"><div class="award-icon">🌿</div><div class="award-title">Sustainable Tourism</div><div class="award-year">FICCI Travel Awards · 2024</div></div>
+      <div class="award-card"><div class="award-icon">🚀</div><div class="award-title">Top 50 Travel Startups</div><div class="award-year">YourStory · 2022</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="bg-cream-2" id="contact">
+  <div class="container-custom">
+    <div class="sec-label">✦ Get in Touch</div>
+    <h2 class="sec-title">Contact <em>Us</em></h2>
+    <div class="contact-grid">
+      <div>
+        <div class="c-item"><div class="c-icon"><i class="bi bi-geo-alt-fill"></i></div><div><div class="c-label">Headquarters</div><div class="c-val">Trip Zone HQ, BKC, Bandra East, Mumbai 400051</div></div></div>
+        <div class="c-item"><div class="c-icon"><i class="bi bi-telephone-fill"></i></div><div><div class="c-label">Phone</div><div class="c-val">+91 98765 43210</div><div style="font-size:0.76rem;color:var(--text-muted);">Mon–Sun · 8AM – 10PM IST</div></div></div>
+        <div class="c-item"><div class="c-icon"><i class="bi bi-envelope-fill"></i></div><div><div class="c-label">Email</div><div class="c-val">hello@Trip Zone.com</div></div></div>
+        <div class="c-item"><div class="c-icon"><i class="bi bi-whatsapp"></i></div><div><div class="c-label">WhatsApp</div><div class="c-val">+91 98765 43210</div></div></div>
+        <div style="margin-top:1rem;">
+          <div class="c-label" style="margin-bottom:0.75rem;">Offices</div>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <span style="background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:0.32rem 0.85rem;font-size:0.8rem;color:var(--text-muted);font-weight:500;">🏙️ Mumbai</span>
+            <span style="background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:0.32rem 0.85rem;font-size:0.8rem;color:var(--text-muted);font-weight:500;">🏛️ Delhi</span>
+            <span style="background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:0.32rem 0.85rem;font-size:0.8rem;color:var(--text-muted);font-weight:500;">🌿 Bangalore</span>
+            <span style="background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:0.32rem 0.85rem;font-size:0.8rem;color:var(--text-muted);font-weight:500;">🌊 Goa</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="cf-title">Send Us a Message</div>
+        <form id="contactForm" novalidate>
+          <div class="cf-group"><label class="cf-label">Your Name</label><input type="text" class="cf-input" id="cfName" placeholder="Arjun Mehta"></div>
+          <div class="cf-group"><label class="cf-label">Email Address</label><input type="email" class="cf-input" id="cfEmail" placeholder="you@email.com"></div>
+          <div class="cf-group"><label class="cf-label">Subject</label><select class="cf-input" id="cfSubject" style="cursor:pointer;"><option>General Enquiry</option><option>Package Customisation</option><option>Booking Support</option><option>Partnership</option><option>Feedback</option></select></div>
+          <div class="cf-group"><label class="cf-label">Message</label><textarea class="cf-textarea" id="cfMsg" placeholder="Tell us how we can help…"></textarea></div>
+          <button type="submit" class="cf-btn">Send Message →</button>
+        </form>
+        <div class="cf-success" id="cfSuccess">🎉 Thank you! We'll get back to you within 24 hours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">✦ Trip Zone</div>
+      <p class="footer-desc">Your trusted partner for premium travel experiences across India and beyond. Crafting unforgettable journeys since 2018.</p>
+      <div class="footer-social">
+        <a href="#" class="soc-icon"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h5>Destinations</h5><ul><li><a href="india.html">India Tours</a></li><li><a href="world.html">Europe</a></li><li><a href="world.html">Asia Pacific</a></li><li><a href="world.html">Americas</a></li></ul></div>
+    <div class="footer-col"><h5>Services</h5><ul><li><a href="flights-cabs.html">Flights</a></li><li><a href="flights-cabs.html">Cabs</a></li><li><a href="#">Hotels</a></li><li><a href="#">Visa Help</a></li></ul></div>
+    <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About Us</a></li><li><a href="#contact">Contact</a></li><li><a href="#">Careers</a></li><li><a href="#">Blog</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Trip Zone Travel Pvt. Ltd. All rights reserved.</span>
+    <span>Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name=document.getElementById('cfName').value.trim();
+    const email=document.getElementById('cfEmail').value.trim();
+    const msg=document.getElementById('cfMsg').value.trim();
+    if (!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!msg) { alert('Please fill in all fields correctly.'); return; }
+    document.getElementById('contactForm').style.display='none';
+    document.getElementById('cfSuccess').style.display='block';
+  });
+</script>
+</body>
+</html>

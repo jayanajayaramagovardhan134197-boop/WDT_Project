@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WanderLux – Contact Us</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B8860B;
+    --gold-light: #D4A827;
+    --cream: #FFFDF7;
+    --cream-2: #FFF5E6;
+    --cream-3: #F5EAD5;
+    --white: #FFFFFF;
+    --text: #1C1C2E;
+    --text-muted: #7A6E5F;
+    --border: #E5DDD0;
+    --nav-h: 70px;
+    --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-md: 0 8px 32px rgba(0,0,0,0.09);
+    --success: #2E7D32;
+    --error: #C62828;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; }
+
+  /* ── NAVBAR ── */
+  .navbar { position:fixed; top:0; left:0; right:0; z-index:1000; height:var(--nav-h); padding:0 2.5rem; display:flex; align-items:center; justify-content:space-between; background:rgba(255,253,247,0.95); backdrop-filter:blur(14px); border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm); }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:700; color:var(--gold); letter-spacing:2px; text-decoration:none; }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.88rem; transition:color 0.25s; font-weight:500; }
+  .nav-links a:hover, .nav-links a.active { color:var(--gold); }
+  .btn-gold-sm { padding:0.48rem 1.2rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:8px; color:#fff; font-weight:600; font-size:0.85rem; cursor:pointer; text-decoration:none; transition:opacity 0.25s; }
+  .btn-gold-sm:hover { opacity:0.88; color:#fff; }
+  .hamburger { display:none; background:none; border:none; cursor:pointer; }
+  .hamburger span { display:block; width:22px; height:2px; background:var(--text); margin:5px 0; border-radius:2px; transition:all 0.3s; }
+  .mobile-menu { display:none; position:fixed; top:var(--nav-h); left:0; right:0; background:var(--white); padding:1.5rem 2rem; border-bottom:1px solid var(--border); z-index:999; box-shadow:var(--shadow-md); }
+  .mobile-menu.open { display:block; }
+  .mobile-menu a { display:block; color:var(--text-muted); text-decoration:none; padding:0.75rem 0; border-bottom:1px solid var(--border); font-size:0.95rem; font-weight:500; }
+  .mobile-menu a:hover { color:var(--gold); }
+
+  /* ── PAGE HERO ── */
+  .page-hero { padding-top:var(--nav-h); height:380px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .page-hero-bg { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1400&q=80') center/cover no-repeat; }
+  .page-hero-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(255,253,247,0.05) 0%,rgba(26,26,46,0.78) 100%); }
+  .hero-content { position:relative; z-index:1; text-align:center; padding:0 1rem; animation:fadeUp 0.8s ease both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(232,201,126,0.2); border:1px solid rgba(232,201,126,0.4); border-radius:50px; padding:0.4rem 1.1rem; font-size:0.76rem; letter-spacing:2px; color:#E8C97E; margin-bottom:1.25rem; font-weight:600; }
+  .hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:300; color:#fff; line-height:1.1; }
+  .hero-title em { font-style:italic; color:#E8C97E; }
+  .hero-sub { color:rgba(255,255,255,0.72); margin-top:0.85rem; font-size:0.95rem; }
+
+  /* ── LAYOUT ── */
+  .container-custom { max-width:1200px; margin:0 auto; padding:0 1.5rem; }
+  section { padding:5rem 1.5rem; }
+  .sec-label { display:inline-flex; align-items:center; gap:8px; font-size:0.72rem; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:0.75rem; font-weight:600; }
+  .sec-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,2.8rem); font-weight:400; color:var(--text); margin-bottom:0.5rem; line-height:1.2; }
+  .sec-title em { font-style:italic; color:var(--gold); }
+  .sec-desc { color:var(--text-muted); font-size:0.92rem; line-height:1.75; margin-bottom:2.5rem; max-width:540px; }
+
+  /* ── CONTACT INFO CARDS ── */
+  .info-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1.25rem; margin-bottom:4rem; }
+  .info-card { background:var(--white); border:1.5px solid var(--border); border-radius:14px; padding:1.75rem 1.5rem; text-align:center; transition:all 0.3s; box-shadow:var(--shadow-sm); }
+  .info-card:hover { border-color:var(--gold); transform:translateY(-4px); box-shadow:var(--shadow-md); }
+  .info-icon { width:52px; height:52px; background:var(--cream-2); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.25rem; color:var(--gold); margin:0 auto 1rem; }
+  .info-label { font-size:0.7rem; letter-spacing:2px; color:var(--gold); font-weight:600; text-transform:uppercase; margin-bottom:0.4rem; }
+  .info-val { font-size:0.92rem; color:var(--text); font-weight:500; margin-bottom:0.2rem; }
+  .info-sub { font-size:0.78rem; color:var(--text-muted); }
+
+  /* ── CONTACT FORM 7 STYLE ── */
+  .cf7-wrapper { background:var(--white); border:1.5px solid var(--border); border-radius:20px; padding:2.5rem; box-shadow:var(--shadow-md); }
+  .cf7-title { font-family:'Cormorant Garamond',serif; font-size:1.9rem; color:var(--text); margin-bottom:0.4rem; font-weight:600; }
+  .cf7-sub { font-size:0.87rem; color:var(--text-muted); margin-bottom:2rem; }
+  .cf7-note { font-size:0.84rem; color:var(--text-muted); line-height:1.75; margin-bottom:1.6rem; padding:1rem 1.1rem; background:var(--cream-2); border:1px solid var(--border); border-radius:12px; }
+
+  /* CF7 Form Fields */
+  .wpcf7-form { margin:0; }
+  .cf7-row { display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+  .cf7-field { margin-bottom:1.1rem; }
+  .cf7-field label { display:block; font-size:0.74rem; color:var(--text-muted); margin-bottom:0.42rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:500; }
+  .cf7-field label .req { color:var(--gold); margin-left:2px; }
+  .wpcf7-form-control {
+    width:100%; background:var(--cream); border:1.5px solid var(--border);
+    color:var(--text); padding:0.72rem 1rem; border-radius:10px;
+    font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none;
+    transition:all 0.25s;
+  }
+  .wpcf7-form-control:focus { border-color:var(--gold); background:var(--white); box-shadow:0 0 0 3px rgba(184,134,11,0.08); }
+  .wpcf7-form-control::placeholder { color:#C5B8A8; }
+  textarea.wpcf7-form-control { resize:vertical; min-height:120px; }
+  select.wpcf7-form-control { cursor:pointer; }
+  .cf7-preview-form .wpcf7-submit { margin-top:0.35rem; }
+
+  /* Validation states */
+  .wpcf7-form-control.wpcf7-not-valid { border-color:#D94040; background:#FFF8F8; }
+  .wpcf7-not-valid-tip { display:block; font-size:0.74rem; color:#D94040; margin-top:4px; }
+  .wpcf7-form-control.wpcf7-valid { border-color:#4CAF50; }
+
+  /* Checkbox / Radio */
+  .cf7-checks { display:flex; flex-direction:column; gap:0.6rem; }
+  .cf7-check-item { display:flex; align-items:center; gap:0.6rem; font-size:0.87rem; color:var(--text-muted); cursor:pointer; }
+  .cf7-check-item input { accent-color:var(--gold); width:15px; height:15px; cursor:pointer; }
+  .cf7-radio-row { display:flex; gap:1.5rem; flex-wrap:wrap; }
+  .cf7-radio-item { display:flex; align-items:center; gap:0.5rem; font-size:0.87rem; color:var(--text-muted); cursor:pointer; }
+  .cf7-radio-item input { accent-color:var(--gold); width:15px; height:15px; cursor:pointer; }
+
+  /* File Upload */
+  .wpcf7-file { background:var(--cream); border:1.5px dashed var(--border); border-radius:10px; padding:0.75rem 1rem; width:100%; font-size:0.85rem; color:var(--text-muted); cursor:pointer; transition:border-color 0.25s; }
+  .wpcf7-file:hover { border-color:var(--gold); }
+
+  /* CAPTCHA / acceptance */
+  .cf7-acceptance { display:flex; align-items:flex-start; gap:0.65rem; font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem; }
+  .cf7-acceptance input { accent-color:var(--gold); margin-top:3px; flex-shrink:0; }
+  .cf7-acceptance a { color:var(--gold); text-decoration:none; }
+
+  /* Submit Button */
+  .wpcf7-submit {
+    width:100%; padding:0.88rem; background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    border:none; border-radius:10px; color:#fff; font-family:'DM Sans',sans-serif;
+    font-weight:700; font-size:0.95rem; cursor:pointer; letter-spacing:0.5px;
+    transition:all 0.3s; box-shadow:0 4px 16px rgba(184,134,11,0.22);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .wpcf7-submit:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(184,134,11,0.32); }
+  .wpcf7-submit:disabled { opacity:0.65; cursor:not-allowed; transform:none; }
+  .wpcf7-submit .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.4); border-top-color:#fff; border-radius:50%; animation:spin 0.7s linear infinite; display:none; }
+  .wpcf7-submit.loading .spinner { display:block; }
+  .wpcf7-submit.loading .btn-text { display:none; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+
+  .cf7-code-card { margin-top:2rem; border-top:1px solid var(--border); padding-top:2rem; }
+  .cf7-code-title { font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:600; color:var(--text); margin-bottom:0.45rem; }
+  .cf7-code-sub { color:var(--text-muted); font-size:0.84rem; line-height:1.75; margin-bottom:1rem; }
+  .cf7-code-block {
+    background:#171717; color:#F8F3E8; border-radius:16px; padding:1.2rem;
+    border:1px solid rgba(255,255,255,0.08); overflow:auto; box-shadow:var(--shadow-sm);
+  }
+  .cf7-code-block pre { margin:0; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:0.8rem; line-height:1.8; white-space:pre-wrap; }
+
+  /* Character count */
+  .char-count { font-size:0.72rem; color:var(--text-muted); text-align:right; margin-top:3px; }
+  .char-count.warn { color:#E65100; }
+
+  /* ── MAP EMBED ── */
+  .map-section { background:var(--cream-2); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .map-wrap { border-radius:16px; overflow:hidden; height:380px; box-shadow:var(--shadow-md); border:1.5px solid var(--border); }
+  .map-wrap iframe { width:100%; height:100%; border:none; display:block; }
+
+  /* ── FAQ ── */
+  .faq-list { display:flex; flex-direction:column; gap:0.85rem; }
+  .faq-item { background:var(--white); border:1.5px solid var(--border); border-radius:12px; overflow:hidden; box-shadow:var(--shadow-sm); transition:border-color 0.3s; }
+  .faq-item.open { border-color:var(--gold); }
+  .faq-q { display:flex; align-items:center; justify-content:space-between; padding:1.1rem 1.5rem; cursor:pointer; font-weight:600; font-size:0.92rem; color:var(--text); user-select:none; }
+  .faq-q i { color:var(--gold); transition:transform 0.3s; font-size:0.85rem; }
+  .faq-item.open .faq-q i { transform:rotate(45deg); }
+  .faq-a { max-height:0; overflow:hidden; transition:max-height 0.4s ease, padding 0.3s; font-size:0.87rem; color:var(--text-muted); line-height:1.75; padding:0 1.5rem; }
+  .faq-item.open .faq-a { max-height:200px; padding:0 1.5rem 1.25rem; }
+
+  /* ── OFFICE HOURS ── */
+  .hours-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; }
+  .hour-card { background:var(--white); border:1.5px solid var(--border); border-radius:12px; padding:1.25rem; box-shadow:var(--shadow-sm); }
+  .hour-day { font-size:0.78rem; font-weight:700; color:var(--text); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:0.3rem; }
+  .hour-time { font-size:0.85rem; color:var(--text-muted); }
+  .hour-badge { display:inline-block; background:#E8F5E9; color:#2E7D32; font-size:0.68rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:50px; margin-left:6px; }
+  .hour-badge.off { background:#FFF3E0; color:#E65100; }
+
+  /* ── SOCIAL STRIP ── */
+  .social-strip { background:var(--cream-3); border-top:1px solid var(--border); padding:3rem 1.5rem; text-align:center; }
+  .social-icons { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:1.5rem; }
+  .soc-btn { display:inline-flex; align-items:center; gap:8px; padding:0.65rem 1.5rem; background:var(--white); border:1.5px solid var(--border); border-radius:50px; color:var(--text-muted); font-size:0.85rem; font-weight:500; text-decoration:none; transition:all 0.25s; box-shadow:var(--shadow-sm); }
+  .soc-btn:hover { border-color:var(--gold); color:var(--gold); }
+  .soc-btn i { font-size:1rem; }
+
+  /* ── FOOTER ── */
+  footer { background:var(--white); padding:4rem 2rem 2rem; border-top:1px solid var(--border); }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1200px; margin:0 auto; }
+  .footer-brand { font-family:'Cormorant Garamond',serif; font-size:1.7rem; color:var(--gold); font-weight:700; margin-bottom:0.9rem; }
+  .footer-desc { font-size:0.84rem; color:var(--text-muted); line-height:1.75; max-width:240px; }
+  .footer-social { display:flex; gap:0.65rem; margin-top:1.5rem; }
+  .soc-icon { width:34px; height:34px; border-radius:50%; border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-size:0.85rem; transition:all 0.25s; text-decoration:none; }
+  .soc-icon:hover { border-color:var(--gold); color:var(--gold); }
+  .footer-col h5 { font-size:0.8rem; letter-spacing:1.5px; color:var(--text); text-transform:uppercase; margin-bottom:1.2rem; font-weight:600; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.6rem; }
+  .footer-col ul a { font-size:0.84rem; color:var(--text-muted); text-decoration:none; transition:color 0.25s; }
+  .footer-col ul a:hover { color:var(--gold); }
+  .footer-bottom { border-top:1px solid var(--border); margin-top:3rem; padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; font-size:0.78rem; color:var(--text-muted); max-width:1200px; margin-left:auto; margin-right:auto; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:768px) { .nav-links{display:none;} .hamburger{display:block;} .cf7-row{grid-template-columns:1fr;} .footer-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:576px) { .footer-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="nav-logo" href="home.html">✦ WanderLux</a>
+  <ul class="nav-links">
+    <li><a href="home.html">Home</a></li>
+    <li><a href="india.html">India</a></li>
+    <li><a href="world.html">World</a></li>
+    <li><a href="flights-cabs.html">Flights & Cabs</a></li>
+    <li><a href="product.html">Packages</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="signup.html" class="btn-gold-sm">Get Started</a>
+    <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="home.html">🏠 Home</a>
+  <a href="india.html">🇮🇳 India</a>
+  <a href="world.html">🌍 World</a>
+  <a href="flights-cabs.html">✈️ Flights & Cabs</a>
+  <a href="product.html">🎁 Packages</a>
+  <a href="about.html">ℹ️ About</a>
+  <a href="contact.html">📞 Contact</a>
+</div>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">📞 Get In Touch</div>
+    <h1 class="hero-title">We'd Love to <em>Hear</em><br>from You</h1>
+    <p class="hero-sub">Our travel experts are ready to craft your perfect journey.</p>
+  </div>
+</div>
+
+<!-- CONTACT INFO -->
+<section>
+  <div class="container-custom">
+    <div class="sec-label">✦ Reach Us</div>
+    <h2 class="sec-title">Contact <em>Information</em></h2>
+    <p class="sec-desc">Whether you have a question about a package, need a custom itinerary, or just want to say hello — we're here for you.</p>
+
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+        <div class="info-label">Headquarters</div>
+        <div class="info-val">WanderLux HQ, BKC</div>
+        <div class="info-sub">Bandra East, Mumbai 400051</div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
+        <div class="info-label">Phone</div>
+        <div class="info-val">+91 98765 43210</div>
+        <div class="info-sub">Mon–Sun · 8AM – 10PM IST</div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="bi bi-envelope-fill"></i></div>
+        <div class="info-label">Email</div>
+        <div class="info-val">hello@wanderlux.com</div>
+        <div class="info-sub">Reply within 24 hours</div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="bi bi-whatsapp"></i></div>
+        <div class="info-label">WhatsApp</div>
+        <div class="info-val">+91 98765 43210</div>
+        <div class="info-sub">Quick replies · Business hours</div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="bi bi-headset"></i></div>
+        <div class="info-label">24/7 Support</div>
+        <div class="info-val">1800-000-WANDER</div>
+        <div class="info-sub">Toll-free helpline</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         CONTACT FORM 7 — Full Implementation
+    ══════════════════════════════════════════ -->
+    <div class="row g-5 align-items-start">
+
+      <!-- Form -->
+      <div class="col-lg-8">
+        <div class="cf7-wrapper">
+          <div class="cf7-title">Send Us a Message</div>
+          <div class="cf7-sub">A polished Contact Form 7 layout with matching HTML structure and CSS styling.</div>
+          <div class="cf7-note">
+            Use the preview below for the design, then paste the Contact Form 7 markup underneath into your WordPress form editor. The CSS on this page is already set up to match that structure.
+          </div>
+
+          <form class="wpcf7-form cf7-preview-form">
+            <div class="cf7-row">
+              <div class="cf7-field">
+                <label>Your Name <span class="req">*</span></label>
+                <input type="text" class="wpcf7-form-control" placeholder="Arjun Mehta">
+              </div>
+              <div class="cf7-field">
+                <label>Email Address <span class="req">*</span></label>
+                <input type="email" class="wpcf7-form-control" placeholder="arjun@email.com">
+              </div>
+            </div>
+
+            <div class="cf7-row">
+              <div class="cf7-field">
+                <label>Phone Number</label>
+                <input type="tel" class="wpcf7-form-control" placeholder="+91 98765 43210">
+              </div>
+              <div class="cf7-field">
+                <label>Travel Interest</label>
+                <select class="wpcf7-form-control">
+                  <option>Choose a service</option>
+                  <option>Holiday Package</option>
+                  <option>Custom Itinerary</option>
+                  <option>Flights</option>
+                  <option>Cabs</option>
+                  <option>Visa Assistance</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cf7-field">
+              <label>Destination</label>
+              <input type="text" class="wpcf7-form-control" placeholder="Kerala, Bali, Switzerland...">
+            </div>
+
+            <div class="cf7-field">
+              <label>Your Message <span class="req">*</span></label>
+              <textarea class="wpcf7-form-control" placeholder="Tell us about your travel plans, dates, group size, and preferences." maxlength="500" oninput="updateCount(this)"></textarea>
+              <div class="char-count" id="charCount">0 / 500 characters</div>
+            </div>
+
+            <div class="cf7-acceptance">
+              <input type="checkbox" id="cf7-accept">
+              <label for="cf7-accept">I agree to the <a href="#">Privacy Policy</a> and allow WanderLux to contact me about this enquiry.</label>
+            </div>
+
+            <button type="button" class="wpcf7-submit">
+              <span class="btn-text"><i class="bi bi-send-fill"></i> &nbsp;Send Message</span>
+            </button>
+          </form>
+
+          <div class="cf7-code-card">
+            <div class="cf7-code-title">Contact Form 7 Markup</div>
+            <div class="cf7-code-sub">Paste this into your Contact Form 7 form editor in WordPress.</div>
+            <div class="cf7-code-block">
+<pre>[text* your-name placeholder "Your Name"]
+[email* your-email placeholder "Email Address"]
+[tel your-phone placeholder "Phone Number"]
+[select your-service "Holiday Package" "Custom Itinerary" "Flights" "Cabs" "Visa Assistance"]
+[text your-destination placeholder "Destination"]
+[textarea* your-message maxlength:500 placeholder "Tell us about your travel plans, dates, group size, and preferences."]
+[acceptance your-acceptance] I agree to the Privacy Policy and allow WanderLux to contact me about this enquiry. [/acceptance]
+[submit "Send Message"]</pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Side Info -->
+      <div class="col-lg-4">
+
+        <!-- Office Hours -->
+        <div style="margin-bottom:2rem;">
+          <div class="sec-label">✦ Office Hours</div>
+          <div class="hours-grid" style="grid-template-columns:1fr;">
+            <div class="hour-card"><div class="hour-day">Monday – Friday <span class="hour-badge">Open</span></div><div class="hour-time">8:00 AM – 9:00 PM IST</div></div>
+            <div class="hour-card"><div class="hour-day">Saturday <span class="hour-badge">Open</span></div><div class="hour-time">9:00 AM – 7:00 PM IST</div></div>
+            <div class="hour-card"><div class="hour-day">Sunday <span class="hour-badge">Open</span></div><div class="hour-time">10:00 AM – 5:00 PM IST</div></div>
+            <div class="hour-card"><div class="hour-day">24/7 Emergency <span class="hour-badge">Always</span></div><div class="hour-time">Toll-Free: 1800-000-WANDER</div></div>
+          </div>
+        </div>
+
+        <!-- Our Offices -->
+        <div>
+          <div class="sec-label">✦ Our Offices</div>
+          <div style="display:flex;flex-direction:column;gap:0.85rem;">
+            <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;box-shadow:var(--shadow-sm);">
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.25rem;">🏙️ Mumbai (HQ)</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);">Unit 4B, Platina Tower, BKC, Bandra East, Mumbai 400051</div>
+            </div>
+            <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;box-shadow:var(--shadow-sm);">
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.25rem;">🏛️ New Delhi</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);">Suite 12A, Connaught Place, New Delhi 110001</div>
+            </div>
+            <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;box-shadow:var(--shadow-sm);">
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.25rem;">🌿 Bangalore</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);">3rd Floor, Prestige Tower, MG Road, Bangalore 560001</div>
+            </div>
+            <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;box-shadow:var(--shadow-sm);">
+              <div style="font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:0.25rem;">🌊 Goa</div>
+              <div style="font-size:0.8rem;color:var(--text-muted);">Shop 7, Marina Complex, Panaji, Goa 403001</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="container-custom" style="padding-top:4rem;padding-bottom:4rem;">
+    <div class="sec-label">✦ Find Us</div>
+    <h2 class="sec-title" style="margin-bottom:1.5rem;">Our <em>Location</em></h2>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.3987983012!2d72.86510581490104!3d19.059983887093984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c8866a456c3f%3A0x828bda74eba5b23!2sBandra%20Kurla%20Complex%2C%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1680000000000!5m2!1sen!2sin"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="WanderLux Mumbai HQ">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section>
+  <div class="container-custom">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="sec-label">✦ FAQs</div>
+        <h2 class="sec-title">Frequently Asked <em>Questions</em></h2>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.75;">Can't find the answer? Reach us directly using the contact form above.</p>
+      </div>
+      <div class="col-lg-8">
+        <div class="faq-list">
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">How long does it take to receive a response? <i class="bi bi-plus-lg"></i></div>
+            <div class="faq-a">We typically respond to all enquiries within 24 hours on business days. For urgent travel needs, please call our 24/7 toll-free number: 1800-000-WANDER.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">Can I customise a travel package? <i class="bi bi-plus-lg"></i></div>
+            <div class="faq-a">Absolutely! All our packages can be fully customised to suit your budget, travel dates, group size, dietary requirements, and personal interests. Use the contact form and select "Custom Itinerary" as the subject.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">Do you offer visa assistance? <i class="bi bi-plus-lg"></i></div>
+            <div class="faq-a">Yes, WanderLux provides end-to-end visa assistance for all international destinations. Our team handles documentation, appointment scheduling, and application submission for most countries.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">What is your cancellation policy? <i class="bi bi-plus-lg"></i></div>
+            <div class="faq-a">Cancellations made 30+ days before travel receive a full refund. 15–29 days: 50% refund. Less than 15 days: no refund unless covered by travel insurance. We always recommend purchasing travel insurance.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">Is there a travel insurance option? <i class="bi bi-plus-lg"></i></div>
+            <div class="faq-a">Yes, we offer comprehensive travel insurance through our partner insurers covering trip cancellation, medical emergencies, lost baggage, and flight delays. Ask our team for details when booking.</div>
+          </div>
+          <div class="faq-item" onclick="toggleFaq(this)">
+            <div class="faq-q">How do I book a cab or airport transfer? <i class="bi bi-plus-lg"></i></div>
+            <div class="faq-a">Visit our <a href="flights-cabs.html" style="color:var(--gold);">Flights & Cabs</a> page to book airport transfers and city cabs. You can also mention it in the contact form and our team will arrange it as part of your package.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<div class="social-strip">
+  <div class="container-custom">
+    <div class="sec-label" style="justify-content:center;">✦ Follow Our Journey</div>
+    <h2 class="sec-title" style="text-align:center;font-size:2rem;">Connect with <em>WanderLux</em></h2>
+    <div class="social-icons">
+      <a href="#" class="soc-btn"><i class="bi bi-instagram"></i> Instagram</a>
+      <a href="#" class="soc-btn"><i class="bi bi-facebook"></i> Facebook</a>
+      <a href="#" class="soc-btn"><i class="bi bi-twitter-x"></i> Twitter / X</a>
+      <a href="#" class="soc-btn"><i class="bi bi-youtube"></i> YouTube</a>
+      <a href="#" class="soc-btn"><i class="bi bi-linkedin"></i> LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">✦ WanderLux</div>
+      <p class="footer-desc">Your trusted partner for premium travel experiences across India and beyond. Crafting unforgettable journeys since 2018.</p>
+      <div class="footer-social">
+        <a href="#" class="soc-icon"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="soc-icon"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Destinations</h5>
+      <ul>
+        <li><a href="india.html">India Tours</a></li>
+        <li><a href="world.html">Europe</a></li>
+        <li><a href="world.html">Asia Pacific</a></li>
+        <li><a href="world.html">Americas</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="flights-cabs.html">Flights</a></li>
+        <li><a href="flights-cabs.html">Cab Rentals</a></li>
+        <li><a href="product.html">Tour Packages</a></li>
+        <li><a href="#">Visa Assistance</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 WanderLux Travel Pvt. Ltd. All rights reserved.</span>
+    <span>Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ── NAVBAR ── */
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+/* ── CHARACTER COUNT ── */
+function updateCount(el) {
+  const count = el.value.length;
+  const max = el.maxLength;
+  const display = document.getElementById('charCount');
+  display.textContent = `${count} / ${max} characters`;
+  display.classList.toggle('warn', count > max * 0.85);
+}
+
+/* ── FAQ ACCORDION ── */
+function toggleFaq(item) {
+  const allItems = document.querySelectorAll('.faq-item');
+  allItems.forEach(i => { if (i !== item) i.classList.remove('open'); });
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip Zone – Create Account</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<style>
+  :root {
+    --gold: #B8860B;
+    --gold-light: #D4A827;
+    --cream: #FFFDF7;
+    --cream-2: #FFF5E6;
+    --white: #FFFFFF;
+    --text: #1C1C2E;
+    --text-muted: #7A6E5F;
+    --border: #E5DDD0;
+    --shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); min-height:100vh; display:flex; overflow-x:hidden; }
+
+  .left-panel { width:45%; position:fixed; top:0; left:0; bottom:0; background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&q=80') center/cover no-repeat; display:flex; flex-direction:column; justify-content:flex-end; padding:3rem; }
+  .left-panel::before { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(26,26,46,0.2) 0%,rgba(26,26,46,0.78) 100%); }
+  .left-content { position:relative; z-index:1; }
+  .brand-logo { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:#FFF8ED; letter-spacing:2px; display:block; margin-bottom:2rem; }
+  .left-tagline { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:300; line-height:1.2; color:#fff; margin-bottom:1rem; }
+  .left-tagline em { color:#E8C97E; font-style:italic; }
+  .left-sub { color:rgba(255,255,255,0.7); font-size:0.92rem; }
+  .dots { display:flex; gap:8px; margin-top:2rem; }
+  .dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.35); }
+  .dot.active { background:#E8C97E; width:24px; border-radius:3px; }
+
+  .right-panel { margin-left:45%; width:55%; min-height:100vh; background:var(--white); display:flex; align-items:center; justify-content:center; padding:3rem 2rem; box-shadow:-4px 0 32px rgba(0,0,0,0.06); }
+  .form-box { width:100%; max-width:460px; }
+  .form-title { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:600; color:var(--text); margin-bottom:0.3rem; }
+  .form-subtitle { color:var(--text-muted); font-size:0.9rem; margin-bottom:2.5rem; }
+  .form-subtitle a { color:var(--gold); text-decoration:none; font-weight:500; }
+
+  .social-btn { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:0.72rem; border:1.5px solid var(--border); background:var(--cream); color:var(--text); border-radius:10px; font-size:0.9rem; cursor:pointer; transition:all 0.25s; font-family:'DM Sans',sans-serif; text-decoration:none; }
+  .social-btn:hover { border-color:var(--gold); color:var(--gold); background:var(--cream-2); }
+  .divider { display:flex; align-items:center; gap:1rem; margin:1.5rem 0; color:var(--text-muted); font-size:0.8rem; }
+  .divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  .field-group { margin-bottom:1.15rem; }
+  .field-label { display:block; font-size:0.76rem; color:var(--text-muted); margin-bottom:0.45rem; letter-spacing:0.5px; text-transform:uppercase; font-weight:500; }
+  .field-wrap { position:relative; }
+  .field-wrap .ficon { position:absolute; left:13px; top:50%; transform:translateY(-50%); color:#B5A898; font-size:0.9rem; }
+  .field-input { width:100%; background:var(--cream); border:1.5px solid var(--border); color:var(--text); padding:0.72rem 0.75rem 0.72rem 2.4rem; border-radius:10px; font-family:'DM Sans',sans-serif; font-size:0.9rem; outline:none; transition:all 0.25s; }
+  .field-input:focus { border-color:var(--gold); background:var(--white); box-shadow:0 0 0 3px rgba(184,134,11,0.08); }
+  .field-input::placeholder { color:#C5B8A8; }
+  .toggle-pass { position:absolute; right:13px; top:50%; transform:translateY(-50%); cursor:pointer; color:#B5A898; font-size:0.9rem; transition:color 0.2s; }
+  .toggle-pass:hover { color:var(--gold); }
+  .field-error { color:#D94040; font-size:0.76rem; margin-top:4px; display:none; }
+  .field-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+  .strength-bar { display:flex; gap:4px; margin-top:6px; }
+  .strength-seg { flex:1; height:3px; border-radius:2px; background:var(--border); transition:background 0.3s; }
+  .strength-label { font-size:0.74rem; color:var(--text-muted); margin-top:4px; }
+
+  .terms-check { display:flex; align-items:flex-start; gap:10px; margin-bottom:1.5rem; }
+  .terms-check input[type="checkbox"] { accent-color:var(--gold); margin-top:3px; }
+  .terms-check label { font-size:0.82rem; color:var(--text-muted); }
+  .terms-check label a { color:var(--gold); text-decoration:none; }
+
+  .submit-btn { width:100%; padding:0.85rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border:none; border-radius:10px; color:#fff; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.95rem; cursor:pointer; letter-spacing:0.5px; transition:all 0.3s; box-shadow:0 4px 16px rgba(184,134,11,0.22); }
+  .submit-btn:hover { transform:translateY(-1px); box-shadow:0 8px 24px rgba(184,134,11,0.32); }
+
+  .success-modal { display:none; position:fixed; inset:0; background:rgba(26,26,46,0.35); backdrop-filter:blur(6px); z-index:9999; align-items:center; justify-content:center; }
+  .success-modal.show { display:flex; }
+  .success-box { background:var(--white); border:1px solid var(--border); border-radius:20px; padding:2.5rem; text-align:center; max-width:360px; animation:popIn 0.4s ease; box-shadow:0 20px 60px rgba(0,0,0,0.12); }
+  @keyframes popIn { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+  .success-icon { width:68px; height:68px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; font-size:1.8rem; color:#fff; }
+  .success-box h3 { font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--text); margin-bottom:0.5rem; }
+  .success-box p { color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem; }
+  .success-box a { display:inline-block; padding:0.7rem 2rem; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:8px; color:#fff; font-weight:600; text-decoration:none; font-size:0.9rem; }
+
+  @media(max-width:900px) { .left-panel{display:none;} .right-panel{margin-left:0;width:100%;} }
+  @media(max-width:480px) { .field-row{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div class="left-panel">
+  <div class="left-content">
+    <span class="brand-logo">✦ Trip Zone</span>
+    <h2 class="left-tagline">Begin your<br><em>journey</em><br>with us.</h2>
+    <p class="left-sub">Discover breathtaking destinations across India & beyond.</p>
+    <div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</div>
+
+<div class="right-panel">
+  <div class="form-box">
+    <h1 class="form-title">Create Account</h1>
+    <p class="form-subtitle">Already have an account? <a href="login.html">Sign in →</a></p>
+    <div class="d-flex gap-2 mb-2">
+      <a href="#" class="social-btn"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.32-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.68 28.18A13.87 13.87 0 0 1 10.8 24c0-1.45.25-2.86.88-4.18v-5.7H4.34A23.93 23.93 0 0 0 0 24c0 3.87.93 7.54 2.57 10.77l7.11-5.52z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.34 5.7C13.42 14.62 18.27 10.75 24 10.75z"/></svg> Google</a>
+      <a href="#" class="social-btn"><i class="bi bi-facebook" style="color:#1877F2"></i> Facebook</a>
+    </div>
+    <div class="divider">or register with email</div>
+    <form id="signupForm" novalidate>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">First Name</label>
+          <div class="field-wrap"><i class="bi bi-person ficon"></i><input type="text" class="field-input" id="firstName" placeholder="Arjun"></div>
+          <div class="field-error" id="firstNameErr">Enter your first name.</div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Last Name</label>
+          <div class="field-wrap"><i class="bi bi-person ficon"></i><input type="text" class="field-input" id="lastName" placeholder="Mehta"></div>
+          <div class="field-error" id="lastNameErr">Enter your last name.</div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Email Address</label>
+        <div class="field-wrap"><i class="bi bi-envelope ficon"></i><input type="email" class="field-input" id="email" placeholder="arjun@email.com"></div>
+        <div class="field-error" id="emailErr">Enter a valid email.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Phone Number</label>
+        <div class="field-wrap"><i class="bi bi-phone ficon"></i><input type="tel" class="field-input" id="phone" placeholder="+91 98765 43210"></div>
+        <div class="field-error" id="phoneErr">Enter a valid phone number.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Password</label>
+        <div class="field-wrap"><i class="bi bi-lock ficon"></i><input type="password" class="field-input" id="password" placeholder="Min. 8 characters" oninput="checkStrength(this.value)"><i class="bi bi-eye toggle-pass" onclick="togglePass('password',this)"></i></div>
+        <div class="strength-bar"><div class="strength-seg" id="seg1"></div><div class="strength-seg" id="seg2"></div><div class="strength-seg" id="seg3"></div><div class="strength-seg" id="seg4"></div></div>
+        <div class="strength-label" id="strengthLabel"></div>
+        <div class="field-error" id="passErr">Password must be at least 8 characters.</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Confirm Password</label>
+        <div class="field-wrap"><i class="bi bi-lock-fill ficon"></i><input type="password" class="field-input" id="confirmPass" placeholder="Repeat password"><i class="bi bi-eye toggle-pass" onclick="togglePass('confirmPass',this)"></i></div>
+        <div class="field-error" id="confirmPassErr">Passwords do not match.</div>
+      </div>
+      <div class="terms-check">
+        <input type="checkbox" id="terms">
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+      </div>
+      
+      <button type="submit" class="submit-btn">Create My Account</button>
+    </form>
+  </div>
+</div>
+
+<div class="success-modal" id="successModal">
+  <div class="success-box">
+    <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+    <h3>Welcome Aboard!</h3>
+    <p>Your Trip Zone account is ready. Start exploring the world!</p>
+    <a href="login.html">Go to Login →</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function togglePass(id, icon) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    icon.classList.toggle('bi-eye'); icon.classList.toggle('bi-eye-slash');
+  }
+  function checkStrength(val) {
+    const colors = ['#D94040','#E8A020','#4CAF50','#B8860B'];
+    const labels = ['Weak','Fair','Good','Strong'];
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    ['seg1','seg2','seg3','seg4'].forEach((s,i) => { document.getElementById(s).style.background = i < score ? colors[score-1] : '#E5DDD0'; });
+    const lbl = document.getElementById('strengthLabel');
+    lbl.textContent = val.length ? (labels[score-1] || 'Very Weak') : '';
+    lbl.style.color = score ? colors[score-1] : '#7A6E5F';
+  }
+  document.getElementById('signupForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let valid = true;
+    const fields = [
+      {id:'firstName',errId:'firstNameErr',validate:v=>v.trim().length>1},
+      {id:'lastName',errId:'lastNameErr',validate:v=>v.trim().length>1},
+      {id:'email',errId:'emailErr',validate:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
+      {id:'phone',errId:'phoneErr',validate:v=>/^[\+]?[\d\s\-]{8,15}$/.test(v.trim())},
+      {id:'password',errId:'passErr',validate:v=>v.length>=8},
+    ];
+    fields.forEach(f => {
+      const val = document.getElementById(f.id).value;
+      const err = document.getElementById(f.errId);
+      const inp = document.getElementById(f.id);
+      if (!f.validate(val)) { err.style.display='block'; inp.style.borderColor='#D94040'; valid=false; }
+      else { err.style.display='none'; inp.style.borderColor='#E5DDD0'; }
+    });
+    const pass = document.getElementById('password').value;
+    const conf = document.getElementById('confirmPass').value;
+    const confErr = document.getElementById('confirmPassErr');
+    if (pass!==conf||conf==='') { confErr.style.display='block'; document.getElementById('confirmPass').style.borderColor='#D94040'; valid=false; }
+    else { confErr.style.display='none'; document.getElementById('confirmPass').style.borderColor='#E5DDD0'; }
+    if (!document.getElementById('terms').checked) { alert('Please accept the Terms of Service.'); valid=false; }
+    if (valid) document.getElementById('successModal').classList.add('show');
+  });
+</script>
+</body>
+</html>
